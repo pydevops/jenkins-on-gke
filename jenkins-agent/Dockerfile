@@ -25,6 +25,7 @@ LABEL \
     org.label-schema.vcs-url="https://github.com/jenkinsci/docker-jnlp-slave"
 
 ENV TERRAFORM_VERSION 0.11.10
+ENV VAULT_VERSION=0.11.5
 
 USER root
 # pipefail added for https://github.com/hadolint/hadolint/wiki/DL4006
@@ -36,10 +37,10 @@ RUN apt-get update && \
     # install terraform
     curl -s -o /terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" && \
     unzip /terraform.zip -d /bin && \
+    curl -s -o /vault.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
+    unzip /vault.zip -d /bin && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 USER jenkins
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 ENV USER jenkins

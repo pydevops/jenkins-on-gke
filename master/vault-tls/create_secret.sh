@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,19 +13,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Build docker image via GCB (Google Cloud Build)
-
-steps:
-  # Build the jenkins-k8s-node container image.
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'build'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/jenkins-k8s-node:1.0.0'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/jenkins-k8s-node:latest'
-      - '.'
-
-images:
-  - gcr.io/$PROJECT_ID/jenkins-k8s-node:1.0.0
-  - gcr.io/$PROJECT_ID/jenkins-k8s-node:latest
+# create a secrete
+kubectl create secret generic vault-ca-pem --from-file=ca.pem
